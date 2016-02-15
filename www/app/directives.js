@@ -1,8 +1,8 @@
 'use strict';
 
-var myApp = angular.module('myApp.directives', []);
+angular.module('myApp.directives', [])
 
-myApp.directive('fhheader', function() {
+.directive('fhheader', function() {
     return {
         scope: {},
         restrict: 'E',
@@ -16,9 +16,20 @@ myApp.directive('fhheader', function() {
             scope.title = headerProps;
         }
     };
-});
+})
 
-myApp.directive('fhfooter', function() {
+.directive('todo', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'views/components/todo.html',
+        link: function(scope, elem, attrs, ctrl) {
+            console.log('todo', scope)
+        }
+    };
+})
+
+.directive('fhfooter', function() {
     return {
         scope: {},
         restrict: 'E',

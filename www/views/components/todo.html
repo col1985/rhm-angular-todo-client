@@ -1,0 +1,19 @@
+<div class="todo">
+    <form ng-submit="ctrl.onSubmit($event);">
+        <h1><small>Todo Task List: ({{ ctrl.updateIncomplete() }} of {{ ctrl.todos.length }})</small></h1>
+        <br>
+        <div class="form-group">
+            <input type="text" class="form-control" id="todoInput" ng-model="ctrl.label" placeholder="Add Todo Task">
+            <br>
+            <button type="submit" class="btn btn-primary btn-sm btn-block">Add Task</button>
+        </div>
+    </form>
+    <br>
+    <ul id="list-wrapper" class="list-group">
+        <li ng-repeat="item in ctrl.todos" class="list-group-item">
+            <p>{{ item.label }}
+            <span class="glyphicon glyphicon-trash" style="float: right;" ng-click="ctrl.deleteItem($index);"></span>
+            </p>
+        </li>
+    </ul>
+</div>
