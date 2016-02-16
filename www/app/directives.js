@@ -24,7 +24,7 @@ angular.module('myApp.directives', [])
         replace: true,
         templateUrl: 'views/components/todo.html',
         link: function(scope, elem, attrs, ctrl) {
-            console.log('todo', scope)
+            // console.log('todo', scope)
         }
     };
 })
