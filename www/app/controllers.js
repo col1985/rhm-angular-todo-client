@@ -25,7 +25,7 @@ angular.module('myApp.controllers', ['fhcloud'])
       // If successful, display the length  of the string.
       if (response !== null) {
         self.todos = response;
-        $log.debug('$fh.cloud response, toDo list updated', self.todos);
+        $log.debug('getTodos response, toDo list updated', self.todos);
       } else {
         alert("Error: Expected a message from $fh.cloud.");
         $log.error("Error: Expected a message from $fh.cloud.");
@@ -47,25 +47,18 @@ angular.module('myApp.controllers', ['fhcloud'])
   // // $fh.cloud call to controller scope
   this.saveTodoItem = function(todoItem) {
     var self = this;
-    //Creating an AngularJS promise as the
-    //$fh.cloud function is asynchronous.
     var d = $q.defer();
-
     var promise = d.promise;
 
-    //When the promise has completed, then the notice message
-    //can be updated to include result of the $fh.cloud call.
     promise.then(function(response) {
-      // If successful, display the length  of the string.
       if (response !== null) {
         self.todos = response;
-        $log.debug('$fh.cloud response, toDo list updated', self.todos);
+        $log.debug('saveTodoItem response, toDo list updated', self.todos);
       } else {
         alert("Error: Expected a message from $fh.cloud.");
         $log.error("Error: Expected a message from $fh.cloud.");
       }
     }, function(err) {
-      //If the function
       alert("$fh.cloud request failed. Error: " + JSON.stringify(err));
     });
 
@@ -90,7 +83,8 @@ angular.module('myApp.controllers', ['fhcloud'])
       var newTask = {
         data: {
           label: this.label,
-          complete: false
+          complete: false,
+          date: new Date()
         }
       };
       // this.todos.unshift(newTask);
@@ -109,9 +103,10 @@ angular.module('myApp.controllers', ['fhcloud'])
       return !item.data.complete;
     }).length;
   };
+
   // each todo item contains a ( X ) button to delete it
   // we simply splice it from the Array using the $index
-  this.deleteItem = function(index) {
+  this.deleteTodoItem = function(index) {
     var self = this;
     var taskId = this.todos[index].uid;
     var d = $q.defer();
@@ -120,13 +115,13 @@ angular.module('myApp.controllers', ['fhcloud'])
     promise.then(function(response) {
       if (response !== null) {
         self.todos = response;
-        $log.debug('$fh.cloud response, toDo list updated', self.todos);
+        $log.debug('deleteTodoItem response, toDo list updated', self.todos);
       } else {
         alert("Error: Expected a message from $fh.cloud.");
         $log.error("Error: Expected a message from $fh.cloud.");
       }
     }, function(err) {
-      alert("$fh.cloud request failed. Error: " + JSON.stringify(err));
+      alert("deleteTodoItem request failed. Error: " + JSON.stringify(err));
     });
 
     fhcloud.cloud({
@@ -137,6 +132,37 @@ angular.module('myApp.controllers', ['fhcloud'])
       },
     }, d.resolve, d.reject);
   };
+
+  this.completeTodoItem = function(index) {
+    var self = this;
+    var taskToUpdate = this.todos[index];
+    var d = $q.defer();
+    var promise = d.promise;
+
+    // set task to complete
+    taskToUpdate.data.complete = true;
+
+    promise.then(function(response) {
+      if (response !== null) {
+        self.todos = response;
+        $log.debug('completeTodoItem response, toDo list updated', self.todos);
+      } else {
+        alert("Error: Expected a message from $fh.cloud.");
+        $log.error("Error: Expected a message from $fh.cloud.");
+      }
+    }, function(err) {
+      alert("completeTodoItem request failed. Error: " + JSON.stringify(err));
+    });
+
+    fhcloud.cloud({
+      "path": "/todo",
+      "method": "PUT",
+      "data": {
+        "taskId": taskToUpdate.uid,
+        "data": taskToUpdate.data
+      },
+    }, d.resolve, d.reject);
+  }
 
   $log.debug('MainCtrl', this);
 });

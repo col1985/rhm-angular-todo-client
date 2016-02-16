@@ -1,6 +1,6 @@
 <div ng-init="ctrl.getTodos()" class="todo">
     <form ng-submit="ctrl.onSubmit($event);">
-        <!-- <h1><small>Todo Task List: ({{ ctrl.updateIncomplete() }}/{{ ctrl.todos.length }})</small></h1> -->
+        <h1><small>Todo Task List: ({{ ctrl.updateIncomplete() }}/{{ ctrl.todos.length }})</small></h1>
         <br>
         <div class="form-group">
             <input type="text" class="form-control" id="todoInput" ng-model="ctrl.label" placeholder="Add Todo Task">
@@ -10,10 +10,13 @@
     </form>
     <br>
     <ul id="list-wrapper" class="list-group">
-        <li ng-repeat="item in ctrl.todos" class="list-group-item">
+        <li ng-repeat="item in ctrl.todos" class="list-group-item" ng-class="item.data.complete ? 'complete-task' : ''">
             <p>{{ item.data.label }}
-            <span class="glyphicon glyphicon-trash" style="float: right;" ng-click="ctrl.deleteItem($index);"></span>
+                <span class="glyphicon glyphicon-ok" style="float: right;" ng-click="ctrl.completeTodoItem($index)"></span>
             </p>
+            <small><b>Created:</b> {{ item.data.date }}
+                <span class="glyphicon glyphicon-trash"  style="float: right;" ng-click="ctrl.deleteTodoItem($index);"></span>
+            </small>
         </li>
     </ul>
 </div>

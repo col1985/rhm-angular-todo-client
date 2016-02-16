@@ -74,7 +74,6 @@ footer > div > small {
     overflow: auto;
     height: 23.6em;
 }
-
-/*.input-group {
-    display: block;
-}*/
+.complete-task {
+    text-decoration: line-through;
+}
