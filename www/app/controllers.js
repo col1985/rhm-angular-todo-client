@@ -4,6 +4,9 @@ angular.module('myApp.controllers', ['fhcloud'])
 
 .controller('MainCtrl', function($log, $q, fhcloud) {
 
+  // our task label
+  this.label = '';
+
   // our task array
   this.todos = [];
 
