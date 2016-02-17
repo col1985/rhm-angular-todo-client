@@ -18,17 +18,6 @@ angular.module('myApp.directives', [])
     };
 })
 
-.directive('todo', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        templateUrl: 'views/components/todo.html',
-        link: function(scope, elem, attrs, ctrl) {
-            // console.log('todo', scope)
-        }
-    };
-})
-
 .directive('fhfooter', function() {
     return {
         scope: {},

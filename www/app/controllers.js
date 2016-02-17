@@ -43,8 +43,8 @@ angular.module('myApp.controllers', ['fhcloud'])
     }, d.resolve, d.reject);
   }
 
-  // // add function to pass userInput to cloud via
-  // // $fh.cloud call to controller scope
+  // add function to pass userInput to cloud via
+  // $fh.cloud call to controller scope
   this.saveTodoItem = function(todoItem) {
     var self = this;
     var d = $q.defer();
